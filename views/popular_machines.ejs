@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>人気の機械 | 佐渡農業機械レンタル</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<%- include('header', { pageTitle: '人気ランキング', pageDescription: '最も人気のある農業機械をご紹介します' }) %>
+  
+  <div class="container">
+    
+    <h2 class="section-title">いいね数ランキング</h2>
+    
+    <div class="machines">
+      <% machines.forEach(function(machine) { %>
+        <%- include('machine-card', { machine: machine }) %>
+      <% }); %>
+    </div>
+  </div>
+  
+  <%- include('footer') %>
+
+</body>
+</html>

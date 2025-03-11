@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>データベース管理 | 佐渡農業機械レンタル</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    /* ダッシュボード用のスタイル */
+    .dashboard-container {
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+    
+    .dashboard-heading {
+      margin-bottom: 20px;
+      color: #2e7d32;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    
+    .data-table th {
+      background-color: #f5f5f5;
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 2px solid #e0e0e0;
+    }
+    
+    .data-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .data-table tr:hover {
+      background-color: #f9f9f9;
+    }
+    
+    .column-name {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    
+    .column-physical-name {
+      display: block;
+      font-size: 12px;
+      color: #666;
+      font-family: monospace;
+    }
+    
+    .refresh-button {
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      display: inline-block;
+      text-decoration: none;
+    }
+    
+    .refresh-button:hover {
+      background-color: #1b5e20;
+    }
+    
+    .table-container {
+      overflow-x: auto;
+    }
+    
+    .schema-info {
+      background-color: #f5f5f5;
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      font-family: monospace;
+      font-size: 14px;
+      white-space: pre-wrap;
+    }
+    
+    /* SQLクエリ実行フォーム */
+    .sql-form {
+      margin-bottom: 20px;
+    }
+
+    .sql-input {
+      width: 100%;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .execute-button {
+      background-color: #2e7d32;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .execute-button:hover {
+      background-color: #1b5e20;
+    }
+
+    .sql-examples {
+      background-color: #f5f5f5;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    .sql-examples code {
+      background-color: #e0e0e0;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+
+    .sql-examples ul {
+      margin: 5px 0 0 0;
+      padding-left: 20px;
+    }
+
+    .sql-results {
+      margin-top: 20px;
+      border-top: 1px solid #ddd;
+      padding-top: 15px;
+    }
+
+    .results-table {
+      margin-top: 10px;
+    }
+
+    .row-count {
+      margin-top: 10px;
+      font-style: italic;
+      color: #666;
+    }
+
+    .error-message {
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+      color: #721c24;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+    }
+
+    .success-message {
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+    }
+    
+    @media (max-width: 768px) {
+      .data-table {
+        font-size: 13px;
+      }
+      
+      .data-table th,
+      .data-table td {
+        padding: 8px;
+      }
+      
+      .column-physical-name {
+        font-size: 11px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <%- include('header', { pageTitle: 'データベース管理', pageDescription: '各テーブルのデータが各院できます' }) %>
+  
+  <div class="container">
+    <a href="/dashboard" class="refresh-button">データを更新</a>
+    
+    <!-- テーブル構造情報 -->
+    <div class="dashboard-container">
+      <h2 class="dashboard-heading">テーブル構造</h2>
+      
+      <h3>machinesテーブル（機械情報）</h3>
+      <div class="schema-info">
+CREATE TABLE machines (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  type TEXT NOT NULL,
+  description TEXT,
+  image_url TEXT,
+  daily_fee INTEGER NOT NULL,
+  likes INTEGER DEFAULT 0
+);
+      </div>
+      
+      <h3>rentalsテーブル（レンタル情報）</h3>
+      <div class="schema-info">
+CREATE TABLE rentals (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  machine_id INTEGER NOT NULL,
+  user_name TEXT NOT NULL,
+  user_phone TEXT NOT NULL,
+  rental_date TEXT NOT NULL,
+  return_date TEXT NOT NULL,
+  status TEXT DEFAULT '予約済',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (machine_id) REFERENCES machines (id)
+);
+      </div>
+    </div>
+    
+    <!-- SQLクエリ実行 -->
+    <div class="dashboard-container">
+      <h2 class="dashboard-heading">SQLクエリ実行</h2>
+
+      <% if (locals.error) { %>
+        <div class="error-message">
+          <%= error %>
+        </div>
+      <% } %>
+      
+      <form action="/dashboard/execute-sql" method="POST" class="sql-form">
+        <div class="form-group">
+          <label for="sql">SQLコマンドを入力:</label>
+          <textarea id="sql" name="sql" rows="4" class="sql-input" placeholder="例: SELECT * FROM machines WHERE type = '耕運機'"
+            ><%= locals.sqlQuery || '' %></textarea>
+        </div>
+        <div class="sql-examples">
+          <strong>サンプルクエリ:</strong>
+          <ul>
+            <li><code>SELECT * FROM machines WHERE daily_fee < 3000</code></li>
+            <li><code>SELECT count(*) as count, type FROM machines GROUP BY type</code></li>
+            <li><code>UPDATE machines SET likes = likes + 1 WHERE id = 1</code></li>
+          </ul>
+        </div>
+        <button type="submit" class="execute-button">SQLを実行</button>
+      </form>
+      
+      <% if (locals.sqlSuccess) { %>
+        <div class="sql-results">
+          <h3>実行結果:</h3>
+          
+          <% if (locals.sqlMessage) { %>
+            <div class="success-message"><%= sqlMessage %></div>
+          <% } %>
+          
+          <% if (locals.sqlResults && sqlResults.length > 0) { %>
+            <div class="table-container">
+              <table class="data-table results-table">
+                <thead>
+                  <tr>
+                    <% Object.keys(sqlResults[0]).forEach(function(key) { %>
+                      <th><%= key %></th>
+                    <% }); %>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% sqlResults.forEach(function(row) { %>
+                    <tr>
+                      <% Object.values(row).forEach(function(value) { %>
+                        <td><%= value !== null ? value : 'NULL' %></td>
+                      <% }); %>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            </div>
+            <p class="row-count"><%= sqlResults.length %>件の結果</p>
+          <% } else if (locals.sqlResults) { %>
+            <p>結果は0件です</p>
+          <% } %>
+        </div>
+      <% } %>
+    </div>
+    
+    <!-- 機械テーブル -->
+    <div class="dashboard-container">
+      <h2 class="dashboard-heading">機械テーブル (machines)</h2>
+      
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>
+                <span class="column-name">ID</span>
+                <span class="column-physical-name">id</span>
+              </th>
+              <th>
+                <span class="column-name">名前</span>
+                <span class="column-physical-name">name</span>
+              </th>
+              <th>
+                <span class="column-name">タイプ</span>
+                <span class="column-physical-name">type</span>
+              </th>
+              <th>
+                <span class="column-name">説明</span>
+                <span class="column-physical-name">description</span>
+              </th>
+              <th>
+                <span class="column-name">画像URL</span>
+                <span class="column-physical-name">image_url</span>
+              </th>
+              <th>
+                <span class="column-name">日額料金</span>
+                <span class="column-physical-name">daily_fee</span>
+              </th>
+              <th>
+                <span class="column-name">いいね数</span>
+                <span class="column-physical-name">likes</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (machines.length === 0) { %>
+              <tr>
+                <td colspan="7">データがありません</td>
+              </tr>
+            <% } else { %>
+              <% machines.forEach(function(machine) { %>
+                <tr>
+                  <td><%= machine.id %></td>
+                  <td><%= machine.name %></td>
+                  <td><%= machine.type %></td>
+                  <td><%= machine.description %></td>
+                  <td><%= machine.image_url || 'なし' %></td>
+                  <td><%= machine.daily_fee %>円</td>
+                  <td><%= machine.likes || 0 %></td>
+                </tr>
+              <% }); %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- 予約テーブル -->
+    <div class="dashboard-container">
+      <h2 class="dashboard-heading">予約テーブル (rentals)</h2>
+      
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>
+                <span class="column-name">ID</span>
+                <span class="column-physical-name">id</span>
+              </th>
+              <th>
+                <span class="column-name">機械ID</span>
+                <span class="column-physical-name">machine_id</span>
+              </th>
+              <th>
+                <span class="column-name">機械名</span>
+                <span class="column-physical-name">machine_name (JOIN)</span>
+              </th>
+              <th>
+                <span class="column-name">予約者</span>
+                <span class="column-physical-name">user_name</span>
+              </th>
+              <th>
+                <span class="column-name">連絡先</span>
+                <span class="column-physical-name">user_phone</span>
+              </th>
+              <th>
+                <span class="column-name">レンタル日</span>
+                <span class="column-physical-name">rental_date</span>
+              </th>
+              <th>
+                <span class="column-name">返却日</span>
+                <span class="column-physical-name">return_date</span>
+              </th>
+              <th>
+                <span class="column-name">ステータス</span>
+                <span class="column-physical-name">status</span>
+              </th>
+              <th>
+                <span class="column-name">作成日時</span>
+                <span class="column-physical-name">created_at</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (rentals.length === 0) { %>
+              <tr>
+                <td colspan="9">データがありません</td>
+              </tr>
+            <% } else { %>
+              <% rentals.forEach(function(rental) { %>
+                <tr>
+                  <td><%= rental.id %></td>
+                  <td><%= rental.machine_id %></td>
+                  <td><%= rental.machine_name %></td>
+                  <td><%= rental.user_name %></td>
+                  <td><%= rental.user_phone %></td>
+                  <td><%= rental.rental_date %></td>
+                  <td><%= rental.return_date %></td>
+                  <td><%= rental.status %></td>
+                  <td><%= rental.created_at %></td>
+                </tr>
+              <% }); %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- お問合せテーブル -->
+    <div class="dashboard-container">
+      <h2 class="dashboard-heading">お問合せテーブル (contacts)</h2>
+      
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>
+                <span class="column-name">ID</span>
+                <span class="column-physical-name">id</span>
+              </th>
+              <th>
+                <span class="column-name">名前</span>
+                <span class="column-physical-name">name</span>
+              </th>
+              <th>
+                <span class="column-name">メールアドレス</span>
+                <span class="column-physical-name">email</span>
+              </th>
+              <th>
+                <span class="column-name">お問合せ件名</span>
+                <span class="column-physical-name">subject</span>
+              </th>
+              <th>
+                <span class="column-name">お問合せ内容</span>
+                <span class="column-physical-name">message</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (contacts.length === 0) { %>
+              <tr>
+                <td colspan="5">データがありません</td>
+              </tr>
+            <% } else { %>
+              <% contacts.forEach(function(contact) { %>
+                <tr>
+                  <td><%= contact.id %></td>
+                  <td><%= contact.name %></td>
+                  <td><%= contact.email %></td>
+                  <td><%= contact.subject %></td>
+                  <td><%= contact.message %></td>
+                </tr>
+              <% }); %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="dashboard-container">
+      <h2 class="dashboard-heading">SQL実行履歴</h2>
+      <p>このページを表示するために実行されたSQL:</p>
+      <div class="schema-info">SELECT * FROM machines</div>
+      <div class="schema-info">SELECT rentals.*, machines.name as machine_name 
+FROM rentals
+JOIN machines ON rentals.machine_id = machines.id
+ORDER BY rentals.created_at DESC</div>
+    </div>
+  </div>
+  
+  <%- include('footer') %>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<header>
+  <div class="container">
+    <h1><%= typeof pageTitle !== 'undefined' ? pageTitle : 'タイトル' %></h1>
+    <p><%= typeof pageDescription !== 'undefined' ? pageDescription : '説明' %></p>
+  </div>
+</header>
+
+<nav class="nav-links">
+  <a href="/">トップページ</a>
+  <a href="/machines/cheap">料金が安い順</a>
+  <a href="/machines/popular">人気ランキング</a>
+  <a href="/search">機械を検索</a>
+  <a href="/dashboard">データベース管理</a>
+  <a href="/admin/contacts">管理者用</a>
+</nav>

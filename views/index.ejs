@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>佐渡農業機械レンタル</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('header', { pageTitle: '佐渡農業機械レンタルシステム', pageDescription: '市内の農家の皆様に最適な農業機械を手軽にレンタル。効率的な農業をサポートします。' }) %>
+  <div class="container">  
+    <h2 class="section-title">レンタル可能機械一覧</h2>
+    <div class="machines">
+      <% machines.forEach(function(machine) { %>
+        <%- include('machine-card', { machine: machine }) %>
+      <% }); %>
+    </div>
+  </div>
+  
+  <%- include('footer') %>
+</body>
+</html>

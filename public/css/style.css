@@ -1,0 +1,648 @@
+/* モダンでスタイリッシュなデザイン */
+:root {
+  --primary-color: #2e7d32;
+  --secondary-color: #66bb6a;
+  --accent-color: #ffc107;
+  --text-color: #333333;
+  --light-bg: #f9f9f9;
+  --dark-bg: #1b5e20;
+  --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  color: var(--text-color);
+  background-color: var(--light-bg);
+  line-height: 1.6;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ヘッダー */
+header {
+  background-color: var(--dark-bg);
+  color: white;
+  padding: 2rem 0;
+  text-align: center;
+  margin-bottom: 2rem;
+  background-image: url('/images/header-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+header .container {
+  position: relative;
+  z-index: 1;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+header p {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+/* ナビゲーション */
+.nav-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  margin-bottom: 2rem;
+}
+
+.nav-links a {
+  color: var(--primary-color);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+/* 機械カード */
+.section-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+  border-bottom: 3px solid var(--secondary-color);
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.machines {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.machine-card {
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.3s ease;
+}
+
+.machine-card:hover {
+  transform: translateY(-5px);
+}
+
+.machine-image {
+  height: 200px;
+  overflow: hidden;
+}
+
+.machine-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.machine-card:hover .machine-image img {
+  transform: scale(1.05);
+}
+
+.machine-content {
+  padding: 1.5rem;
+}
+
+.machine-type {
+  display: inline-block;
+  background-color: var(--secondary-color);
+  color: white;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  margin-bottom: 0.75rem;
+}
+
+.machine-title {
+  font-size: 1.4rem;
+  margin-bottom: 0.75rem;
+  color: var(--primary-color);
+}
+
+.machine-description {
+  color: #666;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.machine-price {
+  font-weight: bold;
+  color: var(--accent-color);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.machine-likes {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  color: #888;
+}
+
+.machine-likes span {
+  margin-left: 0.5rem;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.like-button {
+  background-color: #f8f9fa;
+  color: #444;
+  border: 1px solid #ddd;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.like-button:hover {
+  background-color: #e2e6ea;
+}
+
+.like-button span {
+  margin-left: 0.25rem;
+}
+
+.rent-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  flex: 1;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.rent-button:hover {
+  background-color: var(--dark-bg);
+}
+
+/* レンタルフォーム */
+.form-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  max-width: 700px;
+  margin: 0 auto 3rem;
+}
+
+.form-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.form-header h2 {
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.form-body {
+  padding: 1.5rem;
+}
+
+.machine-details {
+  display: flex;
+  margin-bottom: 2rem;
+  gap: 1.5rem;
+}
+
+.machine-details-image {
+  width: 150px;
+  height: 100px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.machine-details-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.machine-details-content h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 3px rgba(102, 187, 106, 0.1);
+}
+
+.date-inputs {
+  display: flex;
+  gap: 1rem;
+}
+
+.date-inputs .form-group {
+  flex: 1;
+}
+
+.submit-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  width: 100%;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: var(--dark-bg);
+}
+
+/* 確認画面 */
+.confirmation-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  max-width: 700px;
+  margin: 0 auto 3rem;
+  padding: 2rem;
+}
+
+.confirmation-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.confirmation-header h2 {
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.confirmation-details {
+  margin-bottom: 2rem;
+}
+
+.detail-row {
+  display: flex;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-label {
+  width: 30%;
+  font-weight: 500;
+  color: #666;
+}
+
+.detail-value {
+  width: 70%;
+}
+
+.confirmation-note {
+  background-color: #fff8e1;
+  padding: 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #856404;
+}
+
+/* 検索フォーム */
+.search-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.search-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.search-input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.search-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.search-results-title {
+  margin: 1.5rem 0;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+
+/* フッター */
+footer {
+  background-color: var(--dark-bg);
+  color: white;
+  padding: 3rem 0;
+  margin-top: 3rem;
+  text-align: center;
+}
+
+footer .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-copyright {
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.8rem;
+  }
+
+  header p {
+    font-size: 1rem;
+  }
+
+  .machines {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  .date-inputs {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .detail-row {
+    flex-direction: column;
+  }
+
+  .detail-label,
+  .detail-value {
+    width: 100%;
+  }
+
+  .detail-label {
+    margin-bottom: 0.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-links {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .search-form {
+    flex-direction: column;
+  }
+
+  .machine-details {
+    flex-direction: column;
+  }
+
+  .machine-details-image {
+    width: 100%;
+    height: 150px;
+  }
+}
+
+/* ランキングバッジ */
+.ranking-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  z-index: 1;
+}
+
+.rank-1 {
+  background-color: #ffd700; /* 金 */
+}
+
+.rank-2 {
+  background-color: #c0c0c0; /* 銀 */
+}
+
+.rank-3 {
+  background-color: #cd7f32; /* 銅 */
+}
+
+.machine-card {
+  position: relative;
+}
+
+/* 管理者ページ用スタイル */
+.admin-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  padding: 2rem;
+  margin-bottom: 3rem;
+}
+
+.admin-title {
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--secondary-color);
+}
+
+.admin-empty-message {
+  background-color: #f5f5f5;
+  padding: 2rem;
+  text-align: center;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.admin-table-container {
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 0.75rem;
+  border: 1px solid #e0e0e0;
+}
+
+.admin-table th {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 500;
+  text-align: left;
+  position: sticky;
+  top: 0;
+}
+
+.admin-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.admin-table tr:hover {
+  background-color: #e8f5e9;
+}
+
+.admin-subject {
+  font-weight: 500;
+}
+
+.admin-message {
+  color: #555;
+  font-style: italic;
+}
+
+.admin-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.admin-button {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.admin-button:hover {
+  background-color: var(--dark-bg);
+}
+
+@media (max-width: 768px) {
+  .admin-container {
+    padding: 1.5rem;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+}

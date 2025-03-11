@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>レンタル申込 | 佐渡農業機械レンタル</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<%- include('header', { pageTitle: '機械レンタル申込', pageDescription: '必要な情報を入力して予約を完了してください' }) %>
+  
+  <div class="container">
+    
+    <div class="form-container">
+      <div class="form-header">
+        <h2>レンタル申込フォーム</h2>
+        <p>選択した機械の詳細と必要な情報を入力してください</p>
+      </div>
+      
+      <div class="form-body">
+        <div class="machine-details">
+          <div class="machine-details-image">
+            <img src="<%= machine.image_url || '/images/no-image.jpg' %>" alt="<%= machine.name %>">
+          </div>
+          <div class="machine-details-content">
+            <h3><%= machine.name %></h3>
+            <p><strong>タイプ:</strong> <%= machine.type %></p>
+            <p><%= machine.description %></p>
+            <p class="machine-price">1日 <%= machine.daily_fee.toLocaleString() %>円</p>
+          </div>
+        </div>
+        
+        <form action="/rental/<%= machine.id %>" method="POST">
+          <div class="form-group">
+            <label for="user_name">お名前</label>
+            <input type="text" id="user_name" name="user_name" class="form-control" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="user_phone">電話番号</label>
+            <input type="tel" id="user_phone" name="user_phone" class="form-control" required>
+          </div>
+          
+          <div class="date-inputs">
+            <div class="form-group">
+              <label for="rental_date">レンタル開始日</label>
+              <input type="date" id="rental_date" name="rental_date" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="return_date">返却予定日</label>
+              <input type="date" id="return_date" name="return_date" class="form-control" required>
+            </div>
+          </div>
+          
+          <button type="submit" class="submit-button">予約を確定する</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <%- include('footer') %>
+
+</body>
+</html>
