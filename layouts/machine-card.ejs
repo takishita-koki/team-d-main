@@ -1,0 +1,20 @@
+<div class="machine-card">
+  <div class="machine-image">
+    <img src="<%= machine.image_url || '/images/no-image.jpg' %>" alt="<%= machine.name %>">
+  </div>
+  <div class="machine-content">
+    <span class="machine-type"><%= machine.type %></span>
+    <h3 class="machine-title"><%= machine.name %></h3>
+    <p class="machine-description"><%= machine.description %></p>
+    <p class="machine-price">1日 <%= machine.daily_fee.toLocaleString() %>円</p>
+    <div class="machine-likes">
+      <span><%= machine.likes || 0 %> いいね</span>
+    </div>
+    <div class="card-actions">
+      <form action="/machines/<%= machine.id %>/like" method="POST">
+        <button type="submit" class="like-button">👍 <span>いいね！</span></button>
+      </form>
+      <a href="/rental/<%= machine.id %>" class="rent-button">レンタルする</a>
+    </div>
+  </div>
+</div>

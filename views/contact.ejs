@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お問い合わせ - 佐渡農業機械レンタル</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('header', { pageTitle: 'お問い合わせ', pageDescription: 'ご質問やご要望がありましたらお気軽にお問い合わせください。' }) %>
+  
+  <div class="container">
+    <div class="form-container">
+      <div class="form-header">
+        <h2>お問い合わせフォーム</h2>
+        <p>下記のフォームに必要事項をご記入の上、送信してください。</p>
+      </div>
+      
+      <div class="form-body">
+        <form action="/contact" method="POST">
+          <div class="form-group">
+            <label for="name">お名前</label>
+            <input type="text" id="name" name="name" class="form-control">
+          </div>
+          
+          <div class="form-group">
+            <label for="email">メールアドレス</label>
+            <input type="email" id="email" name="email" class="form-control">
+          </div>
+          
+          <div class="form-group">
+            <label for="subject">お問い合わせ件名</label>
+            <input type="text" id="subject" name="subject" class="form-control">
+          </div>
+          
+          <div class="form-group">
+            <label for="message">お問い合わせ内容</label>
+            <textarea id="message" name="message" class="form-control" rows="6"></textarea>
+          </div>
+          
+          <button type="submit" class="submit-button">送信する</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <%- include('footer') %>
+</body>
+</html>

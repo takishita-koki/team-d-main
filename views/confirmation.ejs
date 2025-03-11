@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>予約確認 | 佐渡農業機械レンタル</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<%- include('header', { pageTitle: '予約確認', pageDescription: 'レンタル予約が完了しました' }) %>
+  
+  <div class="container">
+    
+    <div class="confirmation-container">
+      <div class="confirmation-header">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="#2e7d32" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </svg>
+        <h2>予約が完了しました</h2>
+        <p>以下の内容でレンタルを受け付けました</p>
+      </div>
+      
+      <div class="confirmation-details">
+        <div class="detail-row">
+          <div class="detail-label">機械名</div>
+          <div class="detail-value"><%= rental.name %></div>
+        </div>
+        
+        <div class="detail-row">
+          <div class="detail-label">予約者名</div>
+          <div class="detail-value"><%= rental.user_name %></div>
+        </div>
+        
+        <div class="detail-row">
+          <div class="detail-label">連絡先</div>
+          <div class="detail-value"><%= rental.user_phone %></div>
+        </div>
+        
+        <div class="detail-row">
+          <div class="detail-label">レンタル期間</div>
+          <div class="detail-value">
+            <%= rental.rental_date %> 〜 <%= rental.return_date %>
+            （<%= days %>日間）
+          </div>
+        </div>
+        
+        <div class="detail-row">
+          <div class="detail-label">料金</div>
+          <div class="detail-value">
+            <%= rental.daily_fee.toLocaleString() %>円 × <%= days %>日 = 
+            <strong><%= totalFee.toLocaleString() %>円</strong>
+          </div>
+        </div>
+        
+        <div class="detail-row">
+          <div class="detail-label">ステータス</div>
+          <div class="detail-value"><%= rental.status %></div>
+        </div>
+      </div>
+      
+      <div class="confirmation-note">
+        <p>※当日は農業支援センター（市役所別館2階）で手続きをお願いします。</p>
+        <p>※キャンセルは3日前までにご連絡ください。</p>
+      </div>
+    </div>
+  </div>
+  
+  <%- include('footer') %>
+
+</body>
+</html>

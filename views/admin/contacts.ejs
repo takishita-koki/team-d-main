@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お問い合わせ一覧 - 佐渡農業機械レンタル</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../layouts/header', { pageTitle: 'お問い合わせ一覧', pageDescription: '受け付けたお問い合わせの一覧です。' }) %>
+  
+  <div class="container">
+    <div class="admin-container">
+      <h2 class="admin-title">お問い合わせ一覧</h2>
+      
+      <% if (contacts.length === 0) { %>
+        <div class="admin-empty-message">
+          <p>お問い合わせはまだありません。</p>
+        </div>
+      <% } else { %>
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th width="5%">ID</th>
+                <th width="15%">日時</th>
+                <th width="20%">件名</th>
+                <th width="15%">お名前</th>
+                <th width="15%">メールアドレス</th>
+                <th width="30%">内容</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% contacts.forEach(function(contact) { %>
+                <tr>
+                  <td><%= contact.id %></td>
+                  <td><%= new Date(contact.created_at).toLocaleString() %></td>
+                  <td class="admin-subject"><%= contact.subject %></td>
+                  <td><%= contact.name %></td>
+                  <td><%= contact.email %></td>
+                  <td class="admin-message"><%= contact.message.length > 50 ? contact.message.substring(0, 50) + '...' : contact.message %></td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+      
+      <div class="admin-actions">
+        <a href="/" class="admin-button">トップページに戻る</a>
+      </div>
+    </div>
+  </div>
+  
+  <%- include('../layouts/footer') %>
+</body>
+</html>
